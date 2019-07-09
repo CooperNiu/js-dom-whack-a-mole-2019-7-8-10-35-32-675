@@ -31,6 +31,40 @@ window.onload = function () {
 
     function startGame() {
         // TODO: 写开始新游戏后发生的事
+        if (startBtn.textContent === "Replay!") {
+            titleH1.textContent = "WHACK A MOLE!";
+            scoreBoard.textContent = "0";
+            score = 0;
+            timeUp = false;
+            lastHole && lastHole.classList.remove("up");
+            clearTimeout(holesTimer);
+            clearTimeout(gametimer);
+        }
+        
+        
+        holesUp();
+        
+       
+        gametimer = setTimeout(()=>{
+            timeUp = true;
+            titleH1.textContent = "Time up!";
+            startBtn.textContent = "Replay!";
+            startBtn.style.display = "inline";
+            lastHole.classList.remove("up");
+        },gameTime);
+    } 
+    
+    for(const mole of moles) {
+        mole.addEventListener('click',function(){
+            if(!this.parentElement.click && !timeUp){
+                score++;
+                this.parentElement.click = true;
+                this.parentElement.classList.remove("up");
+                scoreBoard.textContent=score.toString();
+            }
+            
+        })
+    }
     }
 
 };
